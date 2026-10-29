@@ -33,20 +33,12 @@ public class GeneradorGrafoTest {
 	public void puedeGenerarGrafoCompleto() {
 	    int n = 8;
 	    int maximo = n * (n - 1) / 2;
-	    
 		Grafo g = generador.grafoRandom(n, maximo, 0);
-
+		
 	    assertEquals(maximo, g.cantidadAristas());
-	    for (int i = 0; i < n; i++) {
-	    	Vertice v1 = g.getVertice(String.valueOf(i));
-	        for (int j = 0; j < n; j++) {
-	            if (i != j) {
-	            	Vertice v2 = g.getVertice(String.valueOf(j));
-	            	assertTrue(g.existeArista(v1,v2));
-	            }
-	        }
-	    }
+	    assertTrue (esGrafoCompleto(g));
 	}
+
 	
 	@Test(timeout = 2000, expected = IllegalArgumentException.class)
 	public void rechazaMasAristasQueLasPosibles() {
@@ -81,15 +73,40 @@ public class GeneradorGrafoTest {
 		Grafo g1 = generador.grafoRandom(n, 10, 42L);
 	    Grafo g2 = generador.grafoRandom(n, 10, 42L);
 
-	    for (int i = 0; i < n; i++) {
-	        for (int j = i + 1; j < n; j++) {
+	    
+	    assertTrue(grafoSonIguales(g1, g2));
+	}
+
+	private boolean grafoSonIguales(Grafo g1, Grafo g2) {
+		int cantidadVertices = g1.cantidadVertices();
+		boolean bandera = true;
+		
+		for (int i = 0; i < cantidadVertices; i++) {
+	        for (int j = i + 1; j < cantidadVertices; j++) {
 	            Vertice a1 = g1.getVertice(String.valueOf(i));
 	            Vertice b1 = g1.getVertice(String.valueOf(j));
 	            Vertice a2 = g2.getVertice(String.valueOf(i));
 	            Vertice b2 = g2.getVertice(String.valueOf(j));
-	            assertEquals(g1.existeArista(a1, b1), g2.existeArista(a2, b2));
+	            bandera = bandera && (g1.existeArista(a1, b1) == g2.existeArista(a2, b2));
 	        }
 	    }
+	return bandera;
+	}
+
+	private boolean esGrafoCompleto(Grafo g) {
+		int cantidadVertices = g.cantidadVertices();
+		boolean bandera = true;
+		
+		for (int i = 0; i < cantidadVertices; i++) {
+	    	Vertice v1 = g.getVertice(String.valueOf(i));
+	        for (int j = 0; j < cantidadVertices; j++) {
+	            if (i != j) {
+	            	Vertice v2 = g.getVertice(String.valueOf(j));
+	            	bandera = bandera && (g.existeArista(v1,v2));
+	            }
+	        }
+	    }
+	return bandera;
 	}
 	
 }
