@@ -1,7 +1,6 @@
 package modelo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class GeneradorGrafo {
 	private int cantidadVertices;
@@ -28,7 +27,7 @@ public class GeneradorGrafo {
 		validarMaximoAristas(cantidadVertices, cantidadAristas);
 
 		agregarVertices();
-		agregarAristas();
+		agregarAristasAleatorias();
 		
 		return grafoARetornar;
 	}
@@ -47,9 +46,9 @@ public class GeneradorGrafo {
 		if (cantidadAristas > cantMaxAristas) throw new IllegalArgumentException("Cantidad de Aristas supera el maximo" + cantMaxAristas);
 	}
 	
-	private void agregarAristas() {
+	private void agregarAristasAleatorias() {
 		
-		Random rnd = new Random(semilla);
+		FuenteAleatorioRandom rnd = new FuenteAleatorioRandom(semilla);
 		
 		int agregados = 0;
 		
