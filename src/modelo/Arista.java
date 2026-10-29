@@ -26,9 +26,7 @@ public class Arista  {
 	    	if (getOrigen().equals(v)) return getDestino();
 	    	if (getDestino().equals(v)) return getOrigen();
 	    	throw new IllegalArgumentException("El vertice no pertenece a esta arista.");
-    }
-    
-      
+    }    
     
     @Override
     public String toString() {

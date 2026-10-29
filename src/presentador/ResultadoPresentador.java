@@ -110,6 +110,10 @@ public class ResultadoPresentador {
 
 		_rVista.mostrarGrafo(vertices, aristas);	
 	}
+	
+	public void manejarClickModificarDatos() {
+		gestorInterfaz.mostrarPantallaCargaManualConInstancia(instancia);
+	}
 
 	public void manejarClickVolverAlMenu() {
 		gestorInterfaz.crearPantallaInicio();
@@ -117,9 +121,5 @@ public class ResultadoPresentador {
 
 	public void manejarClickBtnSalir() {
 		System.exit(0);
-	}
-
-	public void manejarClickModificarDatos() {
-		gestorInterfaz.mostrarPantallaCargaManual();
 	}
 }

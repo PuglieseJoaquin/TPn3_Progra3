@@ -1,0 +1,16 @@
+{
+  "vertices": ["RouterA", "RouterB", "Server1", "Server2", "Switch1", "Switch2", "Firewall", "ClientPC"],
+  "aristas": [
+    { "origen": "Firewall", "destino": "RouterA" },
+    { "origen": "Firewall", "destino": "RouterB" },
+    { "origen": "RouterA", "destino": "Switch1" },
+    { "origen": "RouterB", "destino": "Switch2" },
+    { "origen": "Switch1", "destino": "Server1" },
+    { "origen": "Switch1", "destino": "Server2" },
+    { "origen": "Switch2", "destino": "ClientPC" },
+    { "origen": "Switch1", "destino": "Switch2" },
+    { "origen": "RouterA", "destino": "Server1" },
+    { "origen": "RouterB", "destino": "ClientPC" },
+    { "origen": "Firewall", "destino": "Switch1" }
+  ]
+}

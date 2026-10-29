@@ -1,5 +1,6 @@
 package vista.interfaz;
 
+import modelo.Instancia;
 import vista.pantalla.PantallaResultado;
 
 public interface InterfazGestorPantalla {
@@ -17,4 +18,6 @@ public interface InterfazGestorPantalla {
 	void mostrarPantallaCargaManual();
 	
 	void mostrarPantallaCargaDesdeJSON();
+	
+	void mostrarPantallaCargaManualConInstancia(Instancia instancia);
 }

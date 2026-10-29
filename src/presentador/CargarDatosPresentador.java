@@ -15,8 +15,9 @@ public class CargarDatosPresentador {
 		this._cdVista = cargarDatosVista;
 		this.gestorInterfaz = gestorInterfaz;
 		this.instancia = new Instancia(); 
+		
 	}
-	
+
 	public void manejarClickAgregarVertice(String nombre) {
 		try {
 			if (nombre == null || nombre.trim().isEmpty()) {

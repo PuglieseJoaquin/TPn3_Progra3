@@ -1,26 +1,29 @@
 package vista.pantalla;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
-
+import presentador.CargarDatosDesdeJSONPresentador; 
+import vista.interfaz.CargarDatosDesdeJSONVista;
 import vista.interfaz.InterfazGestorPantalla;
 
 @SuppressWarnings("serial")
-public class PantallaCargarDatosDesdeJSON extends JFrame {
+public class PantallaCargarDatosDesdeJSON extends JFrame implements CargarDatosDesdeJSONVista {
 
+	private CargarDatosDesdeJSONPresentador presentador;
 	private JPanel panelFondo;
-	private JLabel lblTitulo;
-	private JButton btnVolver, btnIrResultado;
+	private JLabel lblTitulo, lblSubtitulo;
+	private JComboBox<String> comboJson;
+	private JButton btnProcesar, btnVolver;
 
 	public PantallaCargarDatosDesdeJSON(InterfazGestorPantalla gestorInterfaz) {
+		this.presentador = new CargarDatosDesdeJSONPresentador(this, gestorInterfaz);
+		
 		configurarPantalla();
-		crearElementos(gestorInterfaz);
+		crearElementos();
 	}
 
 	private void configurarPantalla() {
-		setTitle("Carga con Documento - MPV");
+		setTitle("Carga de Grafo mediante JSON — MVP");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(null);
@@ -32,43 +35,66 @@ public class PantallaCargarDatosDesdeJSON extends JFrame {
 		panelFondo.setLayout(null);
 	}
 
-	private void crearElementos(InterfazGestorPantalla gestorInterfaz) {
-		lblTitulo = new JLabel("Pantalla de Carga con Documento", SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
-		lblTitulo.setForeground(Color.WHITE);
-		lblTitulo.setBounds(100, 120, 700, 50);
+	private void crearElementos() {
+		lblTitulo = new JLabel("CARGA DE GRAFO DESDE ARCHIVO JSON", SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblTitulo.setForeground(new Color(248, 250, 252));
+		lblTitulo.setBounds(100, 80, 700, 40);
 		panelFondo.add(lblTitulo);
 
-		btnIrResultado = new JButton("Ver Resultado");
-		btnIrResultado.setFont(new Font("Segoe UI", Font.BOLD, 16));
-		btnIrResultado.setForeground(Color.WHITE);
-		btnIrResultado.setBackground(new Color(16, 185, 129)); // verde 
-		btnIrResultado.setFocusPainted(false);
-		btnIrResultado.setBorderPainted(false);
-		btnIrResultado.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnIrResultado.setBounds(300, 220, 300, 50);
+		lblSubtitulo = new JLabel("Seleccione una de las opciones prearmadas para ejecutar el grafo:", SwingConstants.CENTER);
+		lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblSubtitulo.setForeground(new Color(222, 233, 221));
+		lblSubtitulo.setBounds(100, 150, 700, 30);
+		panelFondo.add(lblSubtitulo);
 
-		btnIrResultado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gestorInterfaz.crearPantallaResultado();
-			}
+		String[] opcionesJson = {
+			"Grafo 1: Red de Numeros (Pequeño - 6 vertices)",
+			"Grafo 2: Red de Redes (Mediano - 8 vertices)",
+			"Grafo 3: Stack Tecnológico (Mediano - 9 vertices)",
+			"Grafo 4: Red Social de Personas (Complejo - 10 vertices)"
+		};
+		
+		comboJson = new JComboBox<>(opcionesJson);
+		comboJson.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		comboJson.setBackground(Color.WHITE);
+		comboJson.setForeground(new Color(15, 23, 42));
+		comboJson.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		comboJson.setBounds(150, 210, 600, 45);
+		panelFondo.add(comboJson);
+
+		btnProcesar = new JButton("Procesar y Calcular Dominante");
+		btnProcesar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnProcesar.setForeground(Color.WHITE);
+		btnProcesar.setBackground(new Color(16, 185, 129)); 
+		btnProcesar.setFocusPainted(false);
+		btnProcesar.setBorderPainted(false);
+		btnProcesar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btnProcesar.setBounds(250, 300, 400, 45);
+
+		btnProcesar.addActionListener(e -> {
+			int indiceSeleccionado = comboJson.getSelectedIndex();
+			presentador.manejarClickCargarJson(indiceSeleccionado);
 		});
-		panelFondo.add(btnIrResultado);
+		panelFondo.add(btnProcesar);
 
 		btnVolver = new JButton("Volver al Menú");
-		btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 16));
+		btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnVolver.setForeground(Color.WHITE);
-		btnVolver.setBackground(new Color(239, 68, 68)); // rojo
+		btnVolver.setBackground(new Color(239, 68, 68)); 
 		btnVolver.setFocusPainted(false);
 		btnVolver.setBorderPainted(false);
 		btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		btnVolver.setBounds(300, 300, 300, 50);
+		btnVolver.setBounds(250, 365, 400, 45);
 
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gestorInterfaz.crearPantallaInicio();
-			}
+		btnVolver.addActionListener(e -> {
+			presentador.manejarClickVolverAlMenu();
 		});
 		panelFondo.add(btnVolver);
+	}
+
+	@Override
+	public void mostrarMensajeError(String mensaje) {
+		JOptionPane.showMessageDialog(this, mensaje, "Error de Carga", JOptionPane.ERROR_MESSAGE);
 	}
 }

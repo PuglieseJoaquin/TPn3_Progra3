@@ -220,6 +220,10 @@ public class PantallaCargarDatosManual extends JFrame implements CargarDatosVist
 		agregarListenerBtnVolverMenu();
 		panelFondo.add(btnVolver);
 	}
+	
+	public CargarDatosPresentador getPresentador() { 
+	    return presentador;
+	}
 
 	private void agregarListenerBtnVolverMenu() {
 		btnVolver.addActionListener(e -> {

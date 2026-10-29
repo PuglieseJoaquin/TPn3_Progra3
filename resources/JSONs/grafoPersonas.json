@@ -1,0 +1,20 @@
+{
+  "vertices": ["Ana", "Beto", "Carlos", "Diana", "Eva", "Fede", "Gabi", "Hugo", "Ivan", "Juli"],
+  "aristas": [
+    { "origen": "Ana", "destino": "Beto" },
+    { "origen": "Ana", "destino": "Carlos" },
+    { "origen": "Ana", "destino": "Diana" },
+    { "origen": "Beto", "destino": "Eva" },
+    { "origen": "Carlos", "destino": "Fede" },
+    { "origen": "Diana", "destino": "Gabi" },
+    { "origen": "Eva", "destino": "Hugo" },
+    { "origen": "Fede", "destino": "Ivan" },
+    { "origen": "Gabi", "destino": "Juli" },
+    { "origen": "Hugo", "destino": "Ana" },
+    { "origen": "Ivan", "destino": "Beto" },
+    { "origen": "Juli", "destino": "Carlos" },
+    { "origen": "Eva", "destino": "Fede" },
+    { "origen": "Gabi", "destino": "Hugo" },
+    { "origen": "Diana", "destino": "Ivan" }
+  ]
+}

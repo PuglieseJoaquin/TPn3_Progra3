@@ -1,0 +1,18 @@
+{
+  "vertices": ["Java", "Python", "C", "Spring", "Django", "Git", "Linux", "Docker", "PostgreSQL"],
+  "aristas": [
+    { "origen": "Java", "destino": "Spring" },
+    { "origen": "Java", "destino": "Git" },
+    { "origen": "Python", "destino": "Django" },
+    { "origen": "Python", "destino": "Git" },
+    { "origen": "C", "destino": "Linux" },
+    { "origen": "Spring", "destino": "PostgreSQL" },
+    { "origen": "Django", "destino": "PostgreSQL" },
+    { "origen": "Docker", "destino": "Linux" },
+    { "origen": "Docker", "destino": "Spring" },
+    { "origen": "Docker", "destino": "Django" },
+    { "origen": "Git", "destino": "Linux" },
+    { "origen": "Java", "destino": "PostgreSQL" },
+    { "origen": "C", "destino": "Git" }
+  ]
+}

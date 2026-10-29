@@ -2,6 +2,10 @@ package vista.pantalla;
 
 import javax.swing.JFrame;
 
+import modelo.Arista;
+import modelo.Instancia;
+import modelo.Vertice;
+import presentador.CargarDatosPresentador;
 import vista.interfaz.InterfazGestorPantalla;
 
 public class GestorPantallas implements InterfazGestorPantalla {
@@ -46,6 +50,41 @@ public class GestorPantallas implements InterfazGestorPantalla {
 	    mostrarPantalla(pantallaCargaDesdeJSON);
 	}
 
+	@Override
+	public void mostrarPantallaCargaManualConInstancia(Instancia instanciaOriginal) {
+	    inicializarPantallaCarga();
+
+	    if (instanciaOriginal != null) {
+	        CargarDatosPresentador presentador = pantallaCargaDatos.getPresentador();
+	        cargarDatosEnPresentador(presentador, instanciaOriginal);
+	    }
+	}
+
+	private void inicializarPantallaCarga() {
+	    pantallaCargaDatos = new PantallaCargarDatosManual(this);
+	    mostrarPantalla(pantallaCargaDatos);
+	}
+
+	private void cargarDatosEnPresentador(CargarDatosPresentador presentador, Instancia instancia) {
+	    cargarVertices(presentador, instancia);
+	    cargarAristas(presentador, instancia);
+	}
+
+	private void cargarVertices(CargarDatosPresentador presentador, Instancia instancia) {
+	    for (Vertice v : instancia.getVertices()) {
+	        presentador.manejarClickAgregarVertice(v.getNombre());
+	    }
+	}
+
+	private void cargarAristas(CargarDatosPresentador presentador, Instancia instancia) {
+	    for (Arista a : instancia.getGrafo().obtenerTodasLasAristas()) {
+	        presentador.manejarClickAgregarArista(
+	            a.getOrigen().getNombre(), 
+	            a.getDestino().getNombre()
+	        );
+	    }
+	}
+	
 	private JFrame mostrarPantalla(JFrame pantalla) {
 		pantalla.setVisible(true);
 		ocultarPantallas(pantalla);
